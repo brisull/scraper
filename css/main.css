@@ -9,6 +9,26 @@
     border: 1px solid #EFEFEF;
 }
 
+.scrapedurl-container {
+    /*position: relative;*/
+}
+
+.scrapedurl-box {
+    /*position: absolute;
+    top: 20px;
+    left: 100px;*/
+    width: 450px;
+    background-color: #EFEFEF;
+    padding: 10px;
+    border: 1px solid #DADADA;   
+}
+
+.more-images {
+    display: block;
+    font-weight: bold;
+    color: #0000FF;
+}
+
 .img-carousel {
     float: left;
     margin-right: 5px;

@@ -49,6 +49,7 @@ require_once( 'php/class.ScrapedPage.php');
   <script src="js/plugins.js"></script>
   
   <script src="js/libs/knockout-2.1.0.min.js"></script>
+  <script src="js/jquery.fetchurlinfo.js"></script>
   <script src="js/scraper.js"></script>
   <script src="js/main.js"></script>
   

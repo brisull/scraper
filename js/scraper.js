@@ -25,6 +25,8 @@
         };
         
         
+        
+        
         self.handleScrapedPageFailure = function() {
             console.log( 'fail' );   
         };
