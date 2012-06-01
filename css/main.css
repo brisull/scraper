@@ -1,0 +1,19 @@
+
+.jm-share-container {
+	width: 500px;
+	margin: 20px;
+}
+
+#display_box {
+    padding: 10px;
+    border: 1px solid #EFEFEF;
+}
+
+.img-carousel {
+    float: left;
+    margin-right: 5px;
+    width: 125px;
+    height: 125px;
+    overflow: auto;
+    outline: 1px dotted #FF0000;
+}
