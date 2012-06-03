@@ -25,7 +25,6 @@
             jQuery("#"+ self.displayId +" a.next-image").hide();  
         }
         jQuery("#"+ self.displayId +" a.prev-image").show();
-        console.log( $(currImg).index() );
         currImg.fadeOut(200, function() {
            currImg.addClass("img-carousel-inactive").next("img").removeClass("img-carousel-inactive").fadeIn(200);
         });
@@ -41,7 +40,6 @@
             jQuery("#"+ self.displayId +" a.prev-image").hide();  
         }
         jQuery("#"+ self.displayId +" a.next-image").show();
-        console.log( $(currImg).index() );
         currImg.fadeOut(200, function() {
            currImg.addClass("img-carousel-inactive").prev("img").removeClass("img-carousel-inactive").fadeIn(200);
         });
