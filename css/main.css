@@ -24,16 +24,49 @@
 }
 
 .more-images {
+    width: 100%;
     display: block;
-    font-weight: bold;
     color: #0000FF;
 }
+.more-images a {
+    text-decoration: none;
+    font-size: .8em;
+}
 
-.img-carousel {
+.more-images .next-image {
+    float: right;
+    margin-right: 5px;
+    margin-top: 3px;
+}
+.more-images .prev-image {
+    margin-left: 5px;
+}
+.more-images .get-images {
+    display: inline-block;
+    text-align: center;
+    width: 100%;
+}
+.img-carousel-wrapper {
     float: left;
     margin-right: 5px;
-    width: 125px;
-    height: 125px;
-    overflow: auto;
-    outline: 1px dotted #FF0000;
+    margin-bottom: 40px;
+    background-color: #DADADA;
+}
+.img-carousel {
+    width: 100%;
+    text-align: center;
+    overflow: hidden;
+    line-height: 130px;
+    height: 134px;
+}
+
+.img-carousel img {
+    vertical-align: middle;
+    margin: 2px;
+    width: 130px;
+    border: 0;
+}
+
+.img-carousel-inactive {
+    display: none;   
 }
