@@ -205,6 +205,12 @@
             plugin.handlePasteEvent(obj);
         }, 100 );
     });
+  
+  obj.bind("keyup", function() {
+        setTimeout( function() {
+            plugin.handlePasteEvent(obj);
+        }, 500 );
+    });
      
   });  
  };  
