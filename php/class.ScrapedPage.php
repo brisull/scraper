@@ -45,6 +45,20 @@ class ScrapedPage
 				$retVal[$property] = trim($content) ;
 			}
 		}
+
+		// Promote video tags from iframe if parent is empty 
+		$videoTags = array('video', 'video:type', 'video:width', 'video:height');
+		if ( empty($retVal['video'] ) ) {
+			foreach ( $this->frames as $frame ) {
+				$frame = json_decode($frame);
+				foreach( $frame as $property => $content  ) {
+					if ( in_array( $property, $videoTags ) && !empty($content) ) {
+						$retVal[$property] = trim($content) ;
+					}
+				}
+			}
+		}
+			
 		// print_r( $retVal );
 		return json_encode($retVal);
 	}

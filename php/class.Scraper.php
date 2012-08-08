@@ -93,7 +93,10 @@ class Scraper
             }
             $frameData = new ScrapedPage($frameUrl, 1);
             
-            if ( !empty($frameData->facebookMeta['video:type'])) {
+            if ( !empty($frameData->facebookMeta['video:type']) || !empty($frameData->facebookMeta['video'])) {
+                if ( empty($frameData->facebookMeta['video']) ) {
+                    $frameData->facebookMeta['video'] = $frameData->url;
+                }
                 $frames[] = $frameData->_toJson();
                 break 1;
             }
