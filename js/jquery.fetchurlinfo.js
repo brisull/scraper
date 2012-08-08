@@ -2,7 +2,7 @@
  $.fn.fetchUrl = function(options) {  
   var plugin = this;
   plugin.defaults = { 
-   show: ['title', 'url', 'description', 'fbimage', 'moreImages']
+   show: ['title', 'url', 'description', 'video', 'fbimage', 'moreImages']
   };
   
 
@@ -63,6 +63,7 @@
           self.displayPrevImage();
           return false;
        });
+      console.log(self);
     };
     if ( plugin.options.callback ) {
       self.callback = function() { plugin.options.callback(self)
@@ -93,6 +94,9 @@
        }
        if ( self.scrapedPageData.description ) {
            ret += "<p class='description'>"+ self.scrapedPageData.description +"</p>";
+       }
+       if ( self.scrapedPageData.video ) {
+           ret += "<p class='video'><a href='"+ self.scrapedPageData.video +"'>"+ self.scrapedPageData.video +"</a></p>";
        }
       return ret;
     }
@@ -206,11 +210,11 @@
         }, 100 );
     });
   
-  obj.bind("keyup", function() {
-        setTimeout( function() {
-            plugin.handlePasteEvent(obj);
-        }, 500 );
-    });
+  // obj.bind("keyup", function() {
+  //       setTimeout( function() {
+  //           plugin.handlePasteEvent(obj);
+  //       }, 500 );
+  //   });
      
   });  
  };  

@@ -60,7 +60,9 @@ class Scraper
         
         // Use simple_html_dom to parse the page data
         $html = str_get_html($this->rawHtml);
-        
+        if ( empty($html) ) {
+            return;
+        }
         //Grab the page title
         $info->title = trim($html->find('title', 0)->plaintext);
         
@@ -69,27 +71,67 @@ class Scraper
 			if ($meta->name == "description") {
 				$info->description = trim($meta->content);
             }
+            // overwrite title, desc, etc with og tags if present 
             if ( strpos( $meta->property, 'og:' ) !== false ) {
             	$info->facebookMeta[substr($meta->property, 3)] = trim($meta->content);
             }
         }
+
+        // Grab iframe src attribute
+        $frames = array();
+        foreach($html->find('iframe') as $frame) {
+            // If we're already crawling an iframe, bail out
+            if ( $info->depth > 0 ) {
+                continue;
+            }
+            $frameUrl = trim($frame->src);
+            if ( (substr($frameUrl,0,3)=="www") ) {
+                $frameUrl = 'http://' . $frameUrl;    
+            }
+            else if ( (substr($frameUrl,0,2)=="//") ) {
+                $frameUrl = 'http:' . $frameUrl;    
+            }
+            $frameData = new ScrapedPage($frameUrl, 1);
+            
+            if ( !empty($frameData->facebookMeta['video:type'])) {
+                $frames[] = $frameData->_toJson();
+                break 1;
+            }
+        }
+        $info->frames = $frames;
+
+        
+        $embeds = array();
+        foreach($html->find('embed') as $embed) {
+
+            $embedUrl = trim($embed->src);
+            if ( (substr($embedUrl,0,3)=="www") ) {
+                $embedUrl = 'http://' . $embedUrl;    
+            }
+            else if ( (substr($frameUrl,0,2)=="//") ) {
+                $embedUrl = 'http:' . $embedUrl;    
+            }
+            $embeds[] = $embedUrl;
+        }
+        $info->embeds = $embeds;
+        
         //Grab the image URLs
         $imgArr = array();
         foreach($html->find('img') as $element)
         {
-                $rawUrl = $element->src;
+            $rawUrl = $element->src;
 
-                //Turn any relative Urls into absolutes
-                
-                if (substr($rawUrl,0,4)=="http") {
-					$imgArr[] = $rawUrl ;
-                }
-                else if ( substr( $rawUrl,0,2 ) == "//" ) {
-                	continue;	
-                }
-                else if ( strlen( $rawUrl > 10 ) ) {
-                	$imgArr[] = substr( $this->scrapedPage->url,0, $this->lastIndexOf($this->scrapedPage->url, '/') ) . $rawUrl	;
-                }
+            //Turn any relative Urls into absolutes
+            
+            if (substr($rawUrl,0,4)=="http") {
+				$imgArr[] = $rawUrl ;
+            }
+            else if ( substr( $rawUrl,0,2 ) == "//" ) {
+            	$imgArr[] = 'http:' . $rawUrl ;	
+            }
+            else if ( strlen( $rawUrl > 10 ) ) {
+            	$imgArr[] = substr( $this->scrapedPage->url,0, $this->lastIndexOf($this->scrapedPage->url, '/') ) . $rawUrl	;
+            }
         }
         // second loop to get image sizes
         $finalImgArr = array();
